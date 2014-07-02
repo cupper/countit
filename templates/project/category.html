@@ -1,0 +1,78 @@
+{% extends 'rango/base.html' %}
+
+{% block title %} {{ category_name }} {% endblock %}
+
+{% block content %}
+<div class="hero-unit">
+    <h1>{{ category_name }}</h1>
+    <br/>
+
+    <div class="row-fluid">
+        {% if category %}
+            <p>
+                <b id="like_count">{{ category.likes }}</b> people like this category
+                {% if user.is_authenticated %}
+                <button id ="likes" data-catid="{{category.id}}" class="btn btn-mini btn-primary" type="button">Like</button>
+                {% endif %}
+            </p>
+
+            <div id="pages">
+            {% if pages %}
+                {% include "rango/page_list.html" with pages=pages %}
+            {% else %}
+                <strong>No pages at present.</strong>
+            {% endif %}
+            </div>
+
+            {% if user.is_authenticated %}
+            <button class="btn btn-primary" 
+                onclick="window.location.href='{% url 'add_page' category_name_url %}'">Add Page</button>
+            {% endif %}
+
+        {% else %}
+            <p>The specified category '{{ category_name }}' does not exist.</p>
+            {% if user.is_authenticated %}
+            <button class="btn btn-primary" 
+                onclick="window.location.href='{% url 'add_category' category_name_url %}'">Create It?</button>
+            {% endif    %}
+        
+        {% endif %}
+    </div>
+</div>
+
+<!-- Search part -->
+<div class="container-fluid">
+    <form class="form-signin span8" id="search_form" method="post" action="{% url 'category' category_name_url %}">
+        {% csrf_token %}
+        <!-- Display the search form elements here -->
+        <div class="form-horizontal">
+            <input type="text" size="100" name="query" value="" id="query" />
+            <input class="btn btn-primary" type="submit" name="submit" value="Search" />
+        </div>
+        <br />
+    </form>
+</div>
+
+<!-- Display search results in an ordered list -->
+<div style="container-fluid" id="search_results">
+{% if result_list %}
+    <ol>
+        {% for result in result_list %}
+        <li>
+            {% if user.is_authenticated %}
+            <button class="btn btn-mini btn-primary" type="button"
+                data-catid="{{category.id}}" data-title="{{ result.title }}" data-url="{{ result.link }}">Add</button>
+            {% endif %}
+            <strong><a href="{{ result.link }}">{{ result.title }}</a></strong>
+            <br />
+            <em>{{ result.summary }}</em>
+        </li>
+        {% endfor %}
+    </ol>
+{% else %}
+    <br/>
+    <p>No results found</p>
+{% endif %}
+</div>
+
+{% endblock %}

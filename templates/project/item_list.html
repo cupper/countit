@@ -1,0 +1,20 @@
+{% if item_list %}
+<table>
+    <tr>
+        <td>Name</td>
+        <td>Price</td>
+        <td>Date</td>
+        <td>Categories</td>
+    </tr>
+
+    {% for item in item_list %} 
+    <tr>
+        <td>{{ item.name }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.date }}</td>
+        <td>{{ item.get_category_list }}</td>
+    </tr>
+    {% endfor%}
+
+</table>
+{% endif%}

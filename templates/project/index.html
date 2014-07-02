@@ -1,0 +1,23 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+<div class="hero-unit">
+    <h1>Add New Item</h1>
+</div>
+
+<div class="row-fluid">
+    <div class="span6">
+        <h2>Last Five Items</h2>
+        <div id="items">
+            {% if item_list %}
+                {% include "project/item_list.html" with item_list=item_list %}
+            {% else %}
+                <strong>No items at present.</strong>
+            {% endif %}
+        </div>
+
+    </div>
+    <!--/span-->
+</div>
+<!--/row-->
+{% endblock%}

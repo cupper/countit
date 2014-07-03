@@ -1,12 +1,21 @@
-{% if item_list %}
-<table>
-    <tr>
-        <td>Name</td>
-        <td>Price</td>
-        <td>Date</td>
-        <td>Categories</td>
-    </tr>
+{% extends 'project/base.html' %}
 
+{% block content %}
+
+{% if item_list %}
+<div>
+<table class="table table-striped table-bordered table-hover">
+    <caption>Сипсок всех товаров</caption>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Date</th>
+        <th>Categories</th>
+    </tr>
+    </thead>
+
+    <tbody>
     {% for item in item_list %} 
     <tr>
         <td>{{ item.name }}</td>
@@ -15,6 +24,14 @@
         <td>{{ item.get_category_list }}</td>
     </tr>
     {% endfor%}
+    </tbody>
+
+    <tr>
+        <td colspan="4">Total: ???</td>
+    </tr>
 
 </table>
+</div>
 {% endif%}
+
+{% endblock %}

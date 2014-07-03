@@ -1,24 +1,15 @@
-{% extends 'rango/base.html' %}
+{% extends 'project/base.html' %}
 
 {%block content %} 
 <div class="hero-unit">
-    <h1>Add a Page</h1>
+    <h1>Add an Item</h1>
     <br/>
     <div class="container">
-        <form class="span6" id="page_form" method="post" action="{% url 'add_page' category_name_url %}">
+        <form class="span6" id="page_form" method="post" action="{% url 'item_add' %}">
             {% csrf_token %}
-            {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-            {% endfor %}
-
-            {% for field in form.visible_fields %}
-                {{ field.errors }}
-                {{ field.help_text }}<br/>
-                {{ field }}<br/>
-            {% endfor %}
-
+            {{ form.as_p }}
             <br/>
-            <button class="btn btn-primary" type="submit" name="submit">Add Page</button>
+            <button class="btn btn-primary" type="submit" name="submit">Add an Item</button>
         </form>
     </div>
 </div>
